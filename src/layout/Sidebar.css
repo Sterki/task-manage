@@ -1,0 +1,67 @@
+.sidebar {
+  background-color: white;
+  max-width: 300px;
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 3rem;
+}
+.sidebar__title {
+  margin-bottom: 2rem;
+}
+.sidebar__title > h2 {
+  font-size: 2rem;
+  display: flex;
+}
+.sidebar__title > h2 > p {
+  font-weight: normal;
+}
+.sidebar__button {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar__button > button {
+  width: 14rem;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(37, 37, 37);
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+.sidebar__buttoncss {
+  width: 14rem;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(37, 37, 37);
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+}
+.InputProyect {
+  visibility: hidden;
+}
+.sidebar__button > form {
+  margin-bottom: 5rem;
+}
+.sidebar__info {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar__info > h2 {
+  margin-bottom: 2rem;
+}
+.sidebar__input {
+  width: 14rem;
+}
+.button__navi {
+  cursor: pointer;
+}
+.div__contenedornav {
+  position: relative;
+}
