@@ -30,6 +30,7 @@
   font-size: 1.2rem;
   cursor: pointer;
   margin-bottom: 2rem;
+  outline: none;
 }
 .sidebar__buttoncss {
   width: 14rem;
@@ -42,6 +43,7 @@
   cursor: pointer;
   margin-bottom: 2rem;
   margin-top: 2rem;
+  outline: none;
 }
 .InputProyect {
   visibility: hidden;

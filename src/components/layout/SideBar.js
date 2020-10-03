@@ -13,6 +13,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import ViewHeadlineIcon from "@material-ui/icons/ViewHeadline";
+import Projects from "./../Projects";
+import { useDispatch, useSelector } from "react-redux";
+import { addProjectAction } from "../../actions/projectsActions";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,6 +37,33 @@ const useStylesSidebar = makeStyles({
 function SideBar() {
   const classes = useStyles();
   const classesSide = useStylesSidebar();
+  const dispatch = useDispatch();
+  const projectsall = useSelector((state) => state.project.projectsall);
+
+  // state to work with the component
+  const [error, saveError] = useState(false);
+  const [projecto, setProjecto] = useState({
+    name: "",
+  });
+  const { name } = projecto;
+  const handleChange = (e) => {
+    setProjecto({
+      ...projecto,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmmit = (e) => {
+    e.preventDefault();
+    if (name === "") {
+      saveError(true);
+      return;
+    }
+    saveError(false);
+    dispatch(addProjectAction(projecto));
+    setProjecto({ name: "" });
+  };
+
   const [state, setState] = useState({
     left: false,
   });
@@ -45,6 +76,7 @@ function SideBar() {
     }
   }
   const toggleDrawer = (anchor, open) => (event) => {
+    saveError(false);
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -67,8 +99,8 @@ function SideBar() {
         <div className="sidebar">
           <div className="sidebar__title">
             <h2>
-              <strong>Mern</strong>
-              <p>Task</p>
+              <strong>Task</strong>
+              <p>Manage</p>
             </h2>
           </div>
           <div className="sidebar__button">
@@ -78,8 +110,17 @@ function SideBar() {
             >
               New Project
             </button>
+            {error ? (
+              <Alert
+                style={{ width: "14rem", marginBottom: "1rem" }}
+                severity="error"
+              >
+                Ups, You must type a Project Name
+              </Alert>
+            ) : null}
+
             <form
-              onSubmit={handleSubmit}
+              onSubmit={handleSubmmit}
               className={classes.root}
               noValidate
               autoComplete="off"
@@ -90,26 +131,28 @@ function SideBar() {
                   label="Project Name"
                   variant="outlined"
                   className="sidebar__input"
+                  name="name"
+                  value={name}
+                  onChange={handleChange}
                 />
                 <button className="sidebar__buttoncss">Add Project</button>
               </div>
             </form>
+            {/* <Divider /> */}
             <div className="sidebar__info">
               <h2>Your Projects</h2>
-              {/* this are the projects array */}
-              <p>Api rest</p>
-              <p>Mern Project</p>
+              {projectsall?.map((doc) => (
+                <Projects doc={doc} />
+              ))}
             </div>
           </div>
         </div>
       </List>
-      <Divider />
+
       <List></List>
     </div>
   );
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+
   return (
     <div className="div__contenedornav">
       {["left"].map((anchor) => (
