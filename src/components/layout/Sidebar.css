@@ -67,3 +67,10 @@
 .div__contenedornav {
   position: relative;
 }
+.sidebar__eliminar {
+  width: 30%;
+  margin-left: 10rem;
+}
+.sidebar__info > div {
+  display: flex;
+}

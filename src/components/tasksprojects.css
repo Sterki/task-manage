@@ -1,0 +1,23 @@
+.tasksprojects {
+  max-width: 1000px;
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(241, 241, 241);
+  align-items: center;
+}
+.tasksprojects__header {
+  margin-top: 2rem;
+  display: flex;
+  max-width: 60%;
+  width: 100%;
+  flex-direction: column;
+}
+.taskprojects__input {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+}

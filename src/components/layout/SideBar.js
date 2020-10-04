@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -15,8 +15,14 @@ import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import ViewHeadlineIcon from "@material-ui/icons/ViewHeadline";
 import Projects from "./../Projects";
 import { useDispatch, useSelector } from "react-redux";
-import { addProjectAction } from "../../actions/projectsActions";
+import {
+  addProjectAction,
+  getProjectsAction,
+} from "../../actions/projectsActions";
 import Alert from "@material-ui/lab/Alert";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { db } from "./../../firebase";
+import firebase from "firebase";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,16 +48,30 @@ function SideBar() {
 
   // state to work with the component
   const [error, saveError] = useState(false);
-  const [projecto, setProjecto] = useState({
+  const [project, setProject] = useState({
     name: "",
   });
-  const { name } = projecto;
+  const { name } = project;
   const handleChange = (e) => {
-    setProjecto({
-      ...projecto,
+    setProject({
+      ...project,
       [e.target.name]: e.target.value,
     });
   };
+  useEffect(() => {
+    db.collection("projectos")
+      .orderBy("created", "desc")
+      .onSnapshot((snapshot) => {
+        dispatch(
+          getProjectsAction(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              project: doc.data(),
+            }))
+          )
+        );
+      });
+  }, []);
 
   const handleSubmmit = (e) => {
     e.preventDefault();
@@ -60,9 +80,14 @@ function SideBar() {
       return;
     }
     saveError(false);
-    dispatch(addProjectAction(projecto));
-    setProjecto({ name: "" });
+    db.collection("projectos").add({
+      created: firebase.firestore.FieldValue.serverTimestamp(),
+      name: name,
+    });
+    setProject({ name: "" });
   };
+
+  // code to add a project into our database with firebase
 
   const [state, setState] = useState({
     left: false,
@@ -141,8 +166,12 @@ function SideBar() {
             {/* <Divider /> */}
             <div className="sidebar__info">
               <h2>Your Projects</h2>
-              {projectsall?.map((doc) => (
-                <Projects doc={doc} />
+              {projectsall?.map(({ id, project }) => (
+                <>
+                  <div>
+                    <Projects key={id} projectId={id} project={project} />
+                  </div>
+                </>
               ))}
             </div>
           </div>
