@@ -14,13 +14,19 @@
 .CerrarSesion {
   background-color: rgb(37, 37, 37);
   border: 1px solid lightgray;
-  padding: 0.6rem;
-  width: 10rem;
+  padding: 0.3rem;
+  width: 6rem;
   color: white;
   border-radius: 5px;
   cursor: pointer;
   transition: 0.2s ease;
   outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.CerrarSesion > p {
+  margin-left: 0.3rem;
 }
 .CerrarSesion:hover {
   background-color: white;

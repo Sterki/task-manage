@@ -1,0 +1,25 @@
+.register {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-image: url("https://cdn.pixabay.com/photo/2014/05/03/00/45/computer-336628_960_720.jpg");
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  width: 95%;
+  background-color: rgba(255, 255, 255, 0.329);
+  border-radius: 5px;
+  padding: 2rem;
+}
+.register__form > h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: rgb(253, 253, 253);
+  text-transform: uppercase;
+}

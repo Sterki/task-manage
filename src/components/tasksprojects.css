@@ -17,7 +17,14 @@
 .taskprojects__input {
   width: 100%;
   margin-bottom: 1rem;
-  padding: 0.6rem;
+  padding: 0.7rem;
+  font-size: 1.2rem;
+  color: rgb(117, 117, 117);
   border: 1px solid lightgray;
   border-radius: 3px;
+  outline: none;
+}
+.tasksprojects > h2 {
+  color: rgb(117, 117, 117);
+  padding: 2rem;
 }
