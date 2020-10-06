@@ -126,7 +126,7 @@ function Register() {
           <p>
             Back to login?
             <Link
-              to="/register"
+              to="/"
               style={{
                 textDecoration: "none",
                 cursor: "pointer",
@@ -135,7 +135,6 @@ function Register() {
                 fontSize: "1.1rem",
                 marginLeft: "0.5rem",
               }}
-              
             >
               Click Here!
             </Link>
