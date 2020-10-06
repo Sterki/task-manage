@@ -6,6 +6,7 @@ import { Button } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import { auth } from "./../../firebase";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Register() {
   const classes = useStyles();
+  const history = useHistory();
 
   const [userinfo, setUserInfo] = useState({
     name: "",
@@ -40,7 +42,10 @@ function Register() {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
-        console.log("User created Succesfully", authUser);
+        authUser.user.updateProfile({
+          displayName: name,
+        });
+        history.push("/tasks");
       })
       .catch((error) => {
         alert(error.message);
@@ -130,9 +135,9 @@ function Register() {
                 fontSize: "1.1rem",
                 marginLeft: "0.5rem",
               }}
-              to="/"
+              
             >
-              Create Here!
+              Click Here!
             </Link>
           </p>
         </form>

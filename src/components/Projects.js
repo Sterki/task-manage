@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./Projects.css";
 import { setProjectTaskAction } from "./../actions/projectsActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function Projects({ projectId, project }) {
   const dispatch = useDispatch();

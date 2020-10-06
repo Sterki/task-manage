@@ -9,8 +9,7 @@ import TasksProjects from "./components/TasksProjects";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import { auth } from "./firebase";
-import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUserAuthAction } from "./actions/userActions";
 
 function wrappApp() {
@@ -23,18 +22,12 @@ function wrappApp() {
 
 function App() {
   const dispatch = useDispatch();
-  const userLoged = useSelector((state) => state.users.userAuth);
-  const history = useHistory();
+
   useEffect(() => {
     auth.onAuthStateChanged((authUsuer) => {
-      if (authUsuer) {
-        // save the user into a state to work with it
-        dispatch(getUserAuthAction(authUsuer));
-      } else {
-        // we need to delete from our state the user
-      }
+      dispatch(getUserAuthAction(authUsuer));
     });
-  }, [userLoged]);
+  }, [dispatch]);
   return (
     <div className="app">
       <Provider store={store}>

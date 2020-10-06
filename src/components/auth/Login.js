@@ -6,8 +6,6 @@ import { Button } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import { auth } from "./../../firebase";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserAuthAction } from "./../../actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Login() {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const [userinfo, setUserInfo] = useState({
@@ -41,8 +38,6 @@ function Login() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((authUser) => {
-        console.log("Login Succesfully!");
-        dispatch(getUserAuthAction(authUser));
         history.push("/tasks");
       })
       .catch((error) => {
@@ -96,7 +91,7 @@ function Login() {
             Sign In
           </Button>
           <p>
-            u dont have an Account?
+            don't have an account?
             <Link
               to="/register"
               style={{
@@ -107,7 +102,6 @@ function Login() {
                 fontSize: "1.1rem",
                 marginLeft: "0.5rem",
               }}
-              to="/register"
             >
               Create Here!
             </Link>

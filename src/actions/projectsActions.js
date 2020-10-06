@@ -1,4 +1,11 @@
-import { ADD_PROJECT, GET_PROJECTS, SET_PROJECT_TASK } from "./../types";
+import {
+  ADD_PROJECT,
+  GET_PROJECTS,
+  SET_PROJECT_TASK,
+  GET_USER_PROJECT,
+  SET_PROJECT_USER,
+  DELETE_PROJECT_USER,
+} from "./../types";
 
 export function addProjectAction(project) {
   return (dispatch) => {
@@ -32,4 +39,34 @@ const setProjectTask = (id, project) => ({
     id,
     project,
   },
+});
+
+export function getUserTotheProject(user) {
+  return (dispatch) => {
+    dispatch(getUserProject(user));
+  };
+}
+const getUserProject = (user) => ({
+  type: GET_USER_PROJECT,
+  payload: user,
+});
+
+export function setProjectUserAction(projectos) {
+  return (dispatch) => {
+    dispatch(setProjectUser(projectos));
+  };
+}
+const setProjectUser = (projectos) => ({
+  type: SET_PROJECT_USER,
+  payload: projectos,
+});
+
+export function deleteProjectAction() {
+  return (dispatch) => {
+    dispatch(deleteProjectUser());
+  };
+}
+
+const deleteProjectUser = () => ({
+  type: DELETE_PROJECT_USER,
 });

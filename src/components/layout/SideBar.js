@@ -4,23 +4,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
-import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import ViewHeadlineIcon from "@material-ui/icons/ViewHeadline";
 import Projects from "./../Projects";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addProjectAction,
   getProjectsAction,
+  getUserTotheProject,
+  setProjectUserAction,
 } from "../../actions/projectsActions";
 import Alert from "@material-ui/lab/Alert";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { db } from "./../../firebase";
 import firebase from "firebase";
 
@@ -44,10 +37,11 @@ function SideBar() {
   const classes = useStyles();
   const classesSide = useStylesSidebar();
   const dispatch = useDispatch();
-  const projectsall = useSelector((state) => state.project.projectsall);
-
+  const projectusuario = useSelector((state) => state.project.projectusertask);
+  const userAuth = useSelector((state) => state.users.userAuth);
   // state to work with the component
   const [error, saveError] = useState(false);
+  const [uiduser, setUid] = useState("");
   const [project, setProject] = useState({
     name: "",
   });
@@ -59,6 +53,22 @@ function SideBar() {
     });
   };
   useEffect(() => {
+    setUid(userAuth?.uid);
+    db.collection("projectos")
+      .where("uid", "==", `${userAuth?.uid}`)
+      .onSnapshot((snapshot) => {
+        dispatch(
+          setProjectUserAction(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              project: doc.data(),
+            }))
+          )
+        );
+      });
+  }, [userAuth, dispatch]);
+  useEffect(() => {
+    dispatch(getUserTotheProject(userAuth));
     db.collection("projectos")
       .orderBy("created", "desc")
       .onSnapshot((snapshot) => {
@@ -71,7 +81,7 @@ function SideBar() {
           )
         );
       });
-  }, []);
+  }, [dispatch, userAuth]);
 
   const handleSubmmit = (e) => {
     e.preventDefault();
@@ -83,6 +93,7 @@ function SideBar() {
     db.collection("projectos").add({
       created: firebase.firestore.FieldValue.serverTimestamp(),
       name: name,
+      uid: uiduser,
     });
     setProject({ name: "" });
   };
@@ -166,7 +177,7 @@ function SideBar() {
             {/* <Divider /> */}
             <div className="sidebar__info">
               <h2>Your Projects</h2>
-              {projectsall?.map(({ id, project }) => (
+              {projectusuario?.map(({ id, project }) => (
                 <>
                   <div>
                     <Projects key={id} projectId={id} project={project} />

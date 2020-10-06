@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 function TasksProjects() {
   const history = useHistory();
   const projectName = useSelector((state) => state.project.projectTaskAdd);
-  const userLoged = useSelector((state) => state.users.userAuth);
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -26,7 +25,7 @@ function TasksProjects() {
         console.log("wellcome!!");
       }
     });
-  }, []);
+  }, [history]);
 
   const classes = useStyles();
   return (
