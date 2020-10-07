@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import { auth, db } from "./../firebase";
 import { getTaskProjectAction } from "./../actions/projectsActions";
 import Tasks from "./Tasks";
+import TaskToEdit from "./TaskToEdit";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -23,6 +24,7 @@ function TasksProjects() {
   const classes = useStyles();
   const projectName = useSelector((state) => state.project.projectTaskAdd);
   const listtasks = useSelector((state) => state.project.listtasks);
+  const tasktoedit = useSelector((state) => state.project.tasktoedit);
 
   const [name, setName] = useState("");
 
@@ -44,7 +46,6 @@ function TasksProjects() {
         });
     }
   };
-
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       if (!authUser) {
@@ -75,53 +76,76 @@ function TasksProjects() {
 
   return (
     <>
-      <div className="tasksprojects">
-        {projectName ? <h2>Project: {projectName.project.name} </h2> : null}
-        {!projectName ? (
-          <Alert style={{ margin: "2rem" }} severity="warning">
-            You should first select a project to Add a new Task
-          </Alert>
-        ) : (
-          <div className="tasksprojects__header">
-            <form className={classes.root} noValidate autoComplete="off">
-              {/* a input to set the name of the task */}
+      {tasktoedit !== null && projectName !== null ? (
+        <TaskToEdit
+          taskid={tasktoedit.id}
+          task={tasktoedit.task}
+          projectId={projectName.id}
+        />
+      ) : (
+        <div className="tasksprojects">
+          {projectName ? <h2>Project: {projectName.project.name} </h2> : null}
+          {!projectName ? (
+            <Alert style={{ margin: "2rem" }} severity="warning">
+              You should first select a project to Add a new Task
+            </Alert>
+          ) : (
+            <div className="tasksprojects__header">
+              <form className={classes.root} noValidate autoComplete="off">
+                {/* a input to set the name of the task */}
 
-              <TextField
-                className="tasksprojects__input"
-                id="filled-basic"
-                label="Task name"
-                variant="filled"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
+                <TextField
+                  className="tasksprojects__input"
+                  id="filled-basic"
+                  label="Task name"
+                  variant="filled"
+                  name="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
 
-              <Button
-                type="submit"
-                onClick={handleSubmit}
-                variant="contained"
-                color="primary"
-                size="large"
-                className={classes.button}
-                startIcon={<SaveIcon />}
-              >
-                Save Task
-              </Button>
-            </form>
-          </div>
-        )}
-      </div>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  className={classes.button}
+                  startIcon={<SaveIcon />}
+                >
+                  Save Task
+                </Button>
+              </form>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="tasksprojects__hrcontainer">
         <hr />
       </div>
-      <div className="taskproject__tasks">
-        <h2>Tasks here</h2>
-        <div className="tasksprojects__content">
-          {listtasks?.map(({ id, tasks }) => (
-            <Tasks key={id} tasks={tasks} />
-          ))}
+      {projectName !== null ? (
+        <div className="taskproject__tasks">
+          <h2>Tasks here</h2>
+
+          <div className="tasksprojects__content">
+            {listtasks?.map(({ id, tasks }) => (
+              <Tasks
+                key={id}
+                taskId={id}
+                tasks={tasks}
+                projectoTask={projectName}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="taskprojects__alertmessage">
+          <Alert style={{ margin: "2rem" }} severity="warning">
+            You should first select a project to Add a new Task
+          </Alert>
+        </div>
+      )}
     </>
   );
 }

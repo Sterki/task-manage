@@ -63,7 +63,7 @@ function Register() {
               borderRadius: "5px",
             }}
             id="outlined-basic"
-            label="Name"
+            label="Username"
             variant="outlined"
             name="name"
             type="text"

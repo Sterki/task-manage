@@ -6,6 +6,7 @@ import {
   SET_PROJECT_USER,
   DELETE_PROJECT_USER,
   GET_PROJECT_TASK,
+  GET_TASK_TO_EDIT,
 } from "./../types";
 
 export function addProjectAction(project) {
@@ -90,4 +91,17 @@ export function getTaskProjectAction(tasks) {
 const getTaskProject = (tasks) => ({
   type: GET_PROJECT_TASK,
   payload: tasks,
+});
+
+export function getTaskToEditAction(taskid, task) {
+  return (dispatch) => {
+    dispatch(getTaskToEdit(taskid, task));
+  };
+}
+const getTaskToEdit = (taskid, task) => ({
+  type: GET_TASK_TO_EDIT,
+  payload: {
+    id: taskid,
+    task: task,
+  },
 });

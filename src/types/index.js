@@ -13,3 +13,6 @@ export const DELETE_PROJECT_USER = "DELETE_PROJECT_USER";
 
 export const GET_PROJECT_TASK = "GET_PROJECT_TASK";
 
+// action para editar
+
+export const GET_TASK_TO_EDIT = "GET_TASK_TO_EDIT";

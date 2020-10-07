@@ -5,6 +5,7 @@ import {
   SET_PROJECT_USER,
   DELETE_PROJECT_USER,
   GET_PROJECT_TASK,
+  GET_TASK_TO_EDIT,
 } from "./../types";
 
 const inisialState = {
@@ -12,6 +13,7 @@ const inisialState = {
   projectTaskAdd: null,
   projectusertask: [],
   listtasks: [],
+  tasktoedit: null,
 };
 
 export default (state = inisialState, action) => {
@@ -46,6 +48,11 @@ export default (state = inisialState, action) => {
       return {
         ...state,
         listtasks: action.payload,
+      };
+    case GET_TASK_TO_EDIT:
+      return {
+        ...state,
+        tasktoedit: action.payload,
       };
     default:
       return state;
