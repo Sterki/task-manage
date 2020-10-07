@@ -7,6 +7,27 @@
   background-color: rgb(241, 241, 241);
   align-items: center;
 }
+.taskproject__tasks {
+  max-width: 1000px;
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  /* background-color: rgb(241, 241, 241); */
+  background-color: rgb(232, 235, 240);
+  align-items: center;
+  margin-top: 2rem;
+}
+.tasksprojects__hrcontainer {
+  max-width: 1000px;
+  width: 95%;
+  margin: 0 auto;
+  margin-top: 2rem;
+}
+.tasksprojects__hrcontainer > hr {
+  color: rgb(255, 254, 254);
+}
+
 .tasksprojects__header {
   margin-top: 2rem;
   display: flex;
@@ -27,4 +48,12 @@
 .tasksprojects > h2 {
   color: rgb(117, 117, 117);
   padding: 2rem;
+}
+.tasksprojects__input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.tasksprojects__content {
+  width: 100%;
+  margin-top: 2rem;
 }

@@ -4,12 +4,14 @@ import {
   SET_PROJECT_TASK,
   SET_PROJECT_USER,
   DELETE_PROJECT_USER,
+  GET_PROJECT_TASK,
 } from "./../types";
 
 const inisialState = {
   projectsall: [],
   projectTaskAdd: null,
   projectusertask: [],
+  listtasks: [],
 };
 
 export default (state = inisialState, action) => {
@@ -39,6 +41,11 @@ export default (state = inisialState, action) => {
         ...state,
         projectusertask: [],
         projectTaskAdd: null,
+      };
+    case GET_PROJECT_TASK:
+      return {
+        ...state,
+        listtasks: action.payload,
       };
     default:
       return state;

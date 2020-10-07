@@ -5,6 +5,7 @@ import {
   GET_USER_PROJECT,
   SET_PROJECT_USER,
   DELETE_PROJECT_USER,
+  GET_PROJECT_TASK,
 } from "./../types";
 
 export function addProjectAction(project) {
@@ -69,4 +70,24 @@ export function deleteProjectAction() {
 
 const deleteProjectUser = () => ({
   type: DELETE_PROJECT_USER,
+});
+
+export function getProjectTaskAction(project) {
+  return (dispatch) => {
+    dispatch(getProjectTask(project));
+  };
+}
+const getProjectTask = (project) => ({
+  type: GET_PROJECT_TASK,
+  payload: project,
+});
+
+export function getTaskProjectAction(tasks) {
+  return (dispatch) => {
+    dispatch(getTaskProject(tasks));
+  };
+}
+const getTaskProject = (tasks) => ({
+  type: GET_PROJECT_TASK,
+  payload: tasks,
 });

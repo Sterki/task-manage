@@ -1,0 +1,49 @@
+.tasks {
+  background-color: rgb(255, 255, 255);
+  width: 100%;
+  box-shadow: 1px 8px 7px 0px lightgray;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+  display: flex;
+}
+.tasks__actions {
+  display: flex;
+}
+.tasks__titlecontainer {
+  flex: 1;
+}
+.tasks__title {
+  font-size: 1.2rem;
+  color: rgb(122, 121, 121);
+}
+.tasks__actions {
+  flex: 0;
+}
+.tasks__buttonedit {
+  margin-left: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.tasks__buttondelete {
+  margin-left: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.tasks__buttonedit:hover {
+  border: 1px solid green;
+}
+.tasks__buttondelete:hover {
+  border: 1px solid red;
+}
+.tasks__buttonsIncomplete {
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
