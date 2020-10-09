@@ -2,25 +2,32 @@ import React, { useState } from "react";
 import "./Register.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
+import { Backdrop, Button, CircularProgress } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
 import { auth } from "./../../firebase";
 import { Link, useHistory } from "react-router-dom";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
       width: "100%",
-    },
+    },   
+  },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
   },
 }));
 
 function Login() {
   const classes = useStyles();
   const history = useHistory();
+  const[open, setOpen] = useState(false);
+
   const [userinfo, setUserInfo] = useState({
     email: "",
     password: "",
@@ -40,13 +47,28 @@ function Login() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((authUser) => {
-        history.push("/tasks");
+        setOpen(!open);
+        setTimeout(()=>{
+          setOpen(false)
+          history.push("/tasks");
+        }, 1000)  
       })
       .catch((error) => {
-        alert(error.message);
+        Swal.fire({
+          icon: 'error',
+          position: 'top',
+          width: '30rem',
+          title: 'Login Failed',
+          text: `${error.message}`,
+          confirmButtonColor: 'rgb(37, 37, 37)'
+          // footer: '<a href>Why do I have this issue?</a>'
+        })
       });
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className="register">
       <div className="register__form">
@@ -106,6 +128,11 @@ function Login() {
               <AddCircleOutlineIcon />
             </Link>
           </div>
+          <div>
+          <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+              <CircularProgress color="inherit" /> <p>Redirecting...</p>
+            </Backdrop>
+            </div>
         </form>
       </div>
     </div>

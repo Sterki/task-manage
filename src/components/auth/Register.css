@@ -60,3 +60,8 @@
   display: flex;
   align-items: center;
 }
+.div_error {
+  width: 10rem;
+  height: 6rem;
+  background-color: red;
+}

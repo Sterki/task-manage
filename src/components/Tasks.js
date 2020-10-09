@@ -68,13 +68,14 @@ function Tasks({ projectoTask, taskId, tasks }) {
   const handleClick = () => {
     if (projectoTask !== null) {
       Swal.fire({
-        title: "Are you sure?",
+        title: `Delete Task: ${tasks.name}?`,
         text: "You won't be able to revert this!",
-        icon: "warning",
+        icon: 'warning',
+        iconColor: '#ff471a',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonColor: 'rgb(37, 37, 37)',
+        cancelButtonColor: '#cc0000',
+        confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
           db.collection("projectos")

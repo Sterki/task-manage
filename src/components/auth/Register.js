@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import "./Register.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
+import { Backdrop, Button, CircularProgress } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import { auth } from "./../../firebase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import Swal from "sweetalert2";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -16,11 +17,15 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
-
 function Register() {
   const classes = useStyles();
   const history = useHistory();
+  const[open, setOpen] = useState(false);
 
   const [userinfo, setUserInfo] = useState({
     name: "",
@@ -40,17 +45,67 @@ function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // here the fancy code to allow us create a new user
+
+    if(name.trim() === '' || confirm.trim() === ''){
+
+      return Swal.fire({
+        icon: 'error',
+        title: 'Register Fail',
+        position: 'top',
+        text: 'All the fields are required!',
+        confirmButtonColor: 'rgb(37, 37, 37)'
+        // footer: '<a href>Why do I have this issue?</a>'
+      })
+    }
+    if(confirm.length < 6 ){
+
+      return   Swal.fire({
+        icon: 'error',
+        title: 'Register Fail',
+        position: 'top',
+        text: 'the password need to be at least 6 characteres',
+        confirmButtonColor: 'rgb(37, 37, 37)'
+        // footer: '<a href>Why do I have this issue?</a>'
+      })
+    }
+    if(confirm !== password){
+
+      return   Swal.fire({
+        icon: 'error',
+        title: 'Register Fail',
+        position: 'top',
+        text: 'the passwords do not match',
+        confirmButtonColor: 'rgb(37, 37, 37)'
+        // footer: '<a href>Why do I have this issue?</a>'
+      })
+    }
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         authUser.user.updateProfile({
           displayName: name,
         });
-        history.push("/tasks");
+        setOpen(!open);
+        setTimeout(()=>{
+          setOpen(false)
+          history.push("/tasks");
+        }, 1000)  
+       
       })
       .catch((error) => {
-        alert(error.message);
+        Swal.fire({
+          icon: 'error',
+          title: 'Register Fail',
+          position: 'top',
+          text: `${error.message}`,
+          confirmButtonColor: 'rgb(37, 37, 37)'
+          // footer: '<a href>Why do I have this issue?</a>'
+        })
       });
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <div className="register">
@@ -139,6 +194,11 @@ function Register() {
               <ArrowBackIcon />
             </Link>
           </div>
+          <div>
+          <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+              <CircularProgress color="inherit" /> <p>Redirecting...</p>
+            </Backdrop>
+            </div>
         </form>
       </div>
     </div>

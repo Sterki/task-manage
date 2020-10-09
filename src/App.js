@@ -11,6 +11,7 @@ import Login from "./components/auth/Login";
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { getUserAuthAction } from "./actions/userActions";
+import Profile from './components/Profile';
 
 function wrappApp() {
   return (
@@ -35,6 +36,11 @@ function App() {
           <Switch>
             <Route path="/register">
               <Register />
+            </Route>
+            <Route path="/profile">
+            <SideBar />
+            <Header />
+              <Profile />
             </Route>
             <Route path="/tasks">
               <SideBar />

@@ -96,12 +96,13 @@ function TasksProjects() {
     if (projectName !== null) {
 
       Swal.fire({
-        title: 'Are you sure?',
+        title: `Delete Project: ${projectName.project.name}?`,
         text: "You won't be able to revert this!",
         icon: 'warning',
+        iconColor: '#ff471a',
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: 'rgb(37, 37, 37)',
+        cancelButtonColor: '#cc0000',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
