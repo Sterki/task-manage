@@ -26,3 +26,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+h2 {
+  font-size: 1.3rem;
+  color: rgb(78, 78, 78);
+}

@@ -27,7 +27,7 @@
   border-radius: 5px;
   background-color: rgb(37, 37, 37);
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   margin-bottom: 2rem;
   outline: none;
@@ -39,7 +39,7 @@
   border-radius: 5px;
   background-color: rgb(37, 37, 37);
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
   margin-bottom: 2rem;
   margin-top: 2rem;
@@ -66,6 +66,7 @@
   top: 2rem;
   left: 2rem;
   transition: 0.2s ease;
+  outline: none;
 }
 
 .div__contenedornav {

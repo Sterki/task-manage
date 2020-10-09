@@ -14,6 +14,7 @@ import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ChatIcon from '@material-ui/icons/Chat';
 
 //esto es para los avatar de material UI
 
@@ -120,6 +121,11 @@ function Header() {
             {" "}
             <ImportContactsIcon />
             <p>Partner List</p>
+          </MenuItem>
+          <MenuItem className="header__menuitems">
+            {" "}
+            <ChatIcon />
+            <p>Chat</p>
           </MenuItem>
           <MenuItem className="header__menuitems" onClick={handleClick}>
             {" "}

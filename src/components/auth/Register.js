@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import LabelImportantIcon from "@material-ui/icons/LabelImportant";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Swal from "sweetalert2";
+import { Alert, AlertTitle } from "@material-ui/lab";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -26,6 +27,7 @@ function Register() {
   const classes = useStyles();
   const history = useHistory();
   const[open, setOpen] = useState(false);
+  const [errormessage, setError] = useState('');
 
   const [userinfo, setUserInfo] = useState({
     name: "",
@@ -48,36 +50,15 @@ function Register() {
 
     if(name.trim() === '' || confirm.trim() === ''){
 
-      return Swal.fire({
-        icon: 'error',
-        title: 'Register Fail',
-        position: 'top',
-        text: 'All the fields are required!',
-        confirmButtonColor: 'rgb(37, 37, 37)'
-        // footer: '<a href>Why do I have this issue?</a>'
-      })
+     return setError('All the field are required!');
     }
     if(confirm.length < 6 ){
 
-      return   Swal.fire({
-        icon: 'error',
-        title: 'Register Fail',
-        position: 'top',
-        text: 'the password need to be at least 6 characteres',
-        confirmButtonColor: 'rgb(37, 37, 37)'
-        // footer: '<a href>Why do I have this issue?</a>'
-      })
+      return setError('the password need to be atleast 6 characteres');
     }
     if(confirm !== password){
-
-      return   Swal.fire({
-        icon: 'error',
-        title: 'Register Fail',
-        position: 'top',
-        text: 'the passwords do not match',
-        confirmButtonColor: 'rgb(37, 37, 37)'
-        // footer: '<a href>Why do I have this issue?</a>'
-      })
+      return setError('The password do not match!');
+    
     }
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -93,14 +74,16 @@ function Register() {
        
       })
       .catch((error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Register Fail',
-          position: 'top',
-          text: `${error.message}`,
-          confirmButtonColor: 'rgb(37, 37, 37)'
-          // footer: '<a href>Why do I have this issue?</a>'
-        })
+
+        setError(error.message);
+        // Swal.fire({
+        //   icon: 'error',
+        //   title: 'Register Fail',
+        //   position: 'top',
+        //   text: `${error.message}`,
+        //   confirmButtonColor: 'rgb(37, 37, 37)'
+        //   // footer: '<a href>Why do I have this issue?</a>'
+        // })
       });
   };
 
@@ -111,6 +94,12 @@ function Register() {
     <div className="register">
       <div className="register__form">
         <h2>Create an Account</h2>
+        {errormessage ? <div className={classes.root}>
+          <Alert severity="error">
+        <AlertTitle>Register Error</AlertTitle>
+        {errormessage} — <strong>check it out!</strong>
+          </Alert>      
+    </div> : null}
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
             style={{

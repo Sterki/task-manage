@@ -9,6 +9,7 @@ import { auth } from "./../../firebase";
 import { Link, useHistory } from "react-router-dom";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Swal from "sweetalert2";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +28,7 @@ function Login() {
   const classes = useStyles();
   const history = useHistory();
   const[open, setOpen] = useState(false);
+  const [errormessage, setError] = useState('');
 
   const [userinfo, setUserInfo] = useState({
     email: "",
@@ -54,15 +56,17 @@ function Login() {
         }, 1000)  
       })
       .catch((error) => {
-        Swal.fire({
-          icon: 'error',
-          position: 'top',
-          width: '30rem',
-          title: 'Login Failed',
-          text: `${error.message}`,
-          confirmButtonColor: 'rgb(37, 37, 37)'
-          // footer: '<a href>Why do I have this issue?</a>'
-        })
+
+        setError(error.message)
+        // Swal.fire({          
+        //   position: 'top',
+        //   width: '20rem',
+        //   heightAuto: 'false',         
+        //   title: 'Login failed',
+        //   text: `${error.message}`,
+        //   confirmButtonColor: 'rgb(37, 37, 37)'
+        //   // footer: '<a href>Why do I have this issue?</a>'
+        // })
       });
   };
 
@@ -73,6 +77,12 @@ function Login() {
     <div className="register">
       <div className="register__form">
         <h2>Sign In</h2>
+        {errormessage ? <div className={classes.root}>
+          <Alert severity="error">
+        <AlertTitle>Login Error</AlertTitle>
+        {errormessage} — <strong>check it out!</strong>
+          </Alert>      
+    </div> : null}
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
             style={{

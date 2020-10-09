@@ -16,6 +16,7 @@ function Projects({ projectId, project }) {
     dispatch(setTaskToEditNullAction());
   };
   return (
+
     <div className="projects">
       <Link
         onClick={() => handleClick(projectId, project)}

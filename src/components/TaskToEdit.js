@@ -50,8 +50,11 @@ function TaskToEdit({ taskid, task, projectId, setError }) {
     setError(false);
     Swal.fire({
       position: "top-end",
+      width: "20rem",
+      heightAuto: "true",
+      padding: "0.8rem",
       icon: "success",
-      title: "Your task has been Edited",
+      text: "Your task has been edited!",
       showConfirmButton: false,
       timer: 1500,
     });

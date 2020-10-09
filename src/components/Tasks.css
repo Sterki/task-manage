@@ -28,6 +28,7 @@
   cursor: pointer;
   transition: 0.2s ease;
   border: 1px solid transparent;
+  outline: none;
 }
 .tasks__buttondelete {
   margin-left: 1rem;
@@ -36,6 +37,7 @@
   cursor: pointer;
   transition: 0.2s ease;
   border: 1px solid transparent;
+  outline: none;
 }
 .tasks__buttonedit:hover {
   border-color: green;
@@ -49,6 +51,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  outline: none;
 }
 .tasks__buttonsIncomplete > p {
   color: rgb(92, 91, 91);

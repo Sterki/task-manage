@@ -6,6 +6,8 @@
   align-items: center;
   position: relative;
   background-image: url("https://cdn.pixabay.com/photo/2014/05/03/00/45/computer-336628_960_720.jpg");
+  background-size: contain;
+  background-repeat: repeat-y;
 }
 
 .register__form {

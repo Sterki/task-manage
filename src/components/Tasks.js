@@ -70,12 +70,15 @@ function Tasks({ projectoTask, taskId, tasks }) {
       Swal.fire({
         title: `Delete Task: ${tasks.name}?`,
         text: "You won't be able to revert this!",
-        icon: 'warning',
-        iconColor: '#ff471a',
+        width: "28rem",
+        padding: "0.8rem",
+        heightAuto: "true",
+        iconColor: "#ff471a",
+        position: "top",
         showCancelButton: true,
-        confirmButtonColor: 'rgb(37, 37, 37)',
-        cancelButtonColor: '#cc0000',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "rgb(37, 37, 37)",
+        cancelButtonColor: "#cc0000",
+        confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
           db.collection("projectos")
@@ -91,8 +94,11 @@ function Tasks({ projectoTask, taskId, tasks }) {
             });
           Swal.fire({
             position: "top-end",
+            width: "20rem",
+            heightAuto: "true",
+            padding: "0.8rem",
             icon: "success",
-            title: "Your task has been Deleted",
+            text: "Your task has been deleted!",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -133,7 +139,6 @@ function Tasks({ projectoTask, taskId, tasks }) {
         <button onClick={handleClick} className="tasks__buttondelete">
           <DeleteForeverIcon style={{ color: "red", cursor: "pointer" }} />
         </button>
-        
       </div>
     </div>
   );

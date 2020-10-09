@@ -174,12 +174,12 @@ function SideBar() {
                 <button className="sidebar__buttoncss">Add Project</button>
               </div>
             </form>
-            {/* <Divider /> */}
+            {/* <Divider /> */}       
             <div className="sidebar__info">
               <h2>Your Projects</h2>
-              {projectusuario?.map(({ id, project }) => (
+              {projectusuario.map(({ id, project }) => (
                 <>
-                  <div>
+                  <div>                  
                     <Projects key={id} projectId={id} project={project} />
                   </div>
                 </>
