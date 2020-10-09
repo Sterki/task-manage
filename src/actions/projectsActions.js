@@ -7,6 +7,11 @@ import {
   DELETE_PROJECT_USER,
   GET_PROJECT_TASK,
   GET_TASK_TO_EDIT,
+  DELETE_TASK_TO_EDIT,
+  STATUS_DELETE,
+  SET_TASK_TO_EDIT,
+  SET_STATUS_TO_EDIT,
+  DELETE_PROJECT_FIREBASE
 } from "./../types";
 
 export function addProjectAction(project) {
@@ -105,3 +110,55 @@ const getTaskToEdit = (taskid, task) => ({
     task: task,
   },
 });
+
+export function setTaskToEditNullAction() {
+  return (dispatch) => {
+    dispatch(deleteTaskToEdit());
+  };
+}
+const deleteTaskToEdit = () => ({
+  type: DELETE_TASK_TO_EDIT,
+});
+
+export function setStatusDeleteAction(status) {
+  return (dispatch) => {
+    dispatch(setStatusDelete(status));
+  };
+}
+const setStatusDelete = (status) => ({
+  type: STATUS_DELETE,
+  payload: status,
+});
+
+export function setTaskToEditAction() {
+  return (dispatch) => {
+    dispatch(setTaskToEdit());
+  };
+}
+const setTaskToEdit = () => ({
+  type: SET_TASK_TO_EDIT,
+});
+
+export function setStatusEditAction(status) {
+  return (dispatch) => {
+    dispatch(setStatusToEdit(status));
+  };
+}
+
+const setStatusToEdit = (status) => ({
+  type: SET_STATUS_TO_EDIT,
+  payload: status,
+});
+
+export function deleteProjectFirebaseAction(){
+
+  return (dispatch) => {
+
+    dispatch(deleteProjectActionFirebase());
+  }
+}
+const deleteProjectActionFirebase = () => ({
+
+  type: DELETE_PROJECT_FIREBASE,
+
+})

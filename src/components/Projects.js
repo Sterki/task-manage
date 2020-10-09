@@ -1,14 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Projects.css";
-import { setProjectTaskAction } from "./../actions/projectsActions";
-import { useDispatch } from "react-redux";
+import {
+  setProjectTaskAction,
+  setTaskToEditNullAction,
+} from "./../actions/projectsActions";
+import { useDispatch, useSelector } from "react-redux";
 
 function Projects({ projectId, project }) {
   const dispatch = useDispatch();
+  const tasktoedit = useSelector((state) => state.project.tasktoedit);
 
   const handleClick = (projectId, project) => {
     dispatch(setProjectTaskAction(projectId, project));
+    dispatch(setTaskToEditNullAction());
   };
   return (
     <div className="projects">

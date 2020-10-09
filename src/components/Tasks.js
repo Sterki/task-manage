@@ -5,13 +5,29 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import { getTaskToEditAction } from "./../actions/projectsActions";
-import { useDispatch } from "react-redux";
+import {
+  getTaskToEditAction,
+  setStatusDeleteAction,
+  setStatusEditAction,
+} from "./../actions/projectsActions";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+
 import { db } from "./../firebase";
+
+// here the material ui code
+import Slide from "@material-ui/core/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function Tasks({ projectoTask, taskId, tasks }) {
   const dispatch = useDispatch();
   const [status, setStatus] = useState();
+
+  // here the state to change open to close
+  const [open, setOpen] = useState(false);
 
   const handleClickComplete = () => {
     if (projectoTask !== null) {
@@ -46,6 +62,42 @@ function Tasks({ projectoTask, taskId, tasks }) {
   };
   const handleClickEdit = (taskId, tasks) => {
     dispatch(getTaskToEditAction(taskId, tasks));
+    dispatch(setStatusEditAction(false));
+  };
+
+  const handleClick = () => {
+    if (projectoTask !== null) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          db.collection("projectos")
+            .doc(projectoTask.id)
+            .collection("tasks")
+            .doc(taskId)
+            .delete()
+            .then(function () {
+              console.log("Tarea Eliminada con exito");
+            })
+            .catch((error) => {
+              console.log(error.message);
+            });
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your task has been Deleted",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+    }
   };
   return (
     <div className="tasks">
@@ -77,9 +129,10 @@ function Tasks({ projectoTask, taskId, tasks }) {
             style={{ color: "green", cursor: "pointer" }}
           />
         </button>
-        <button className="tasks__buttondelete">
+        <button onClick={handleClick} className="tasks__buttondelete">
           <DeleteForeverIcon style={{ color: "red", cursor: "pointer" }} />
         </button>
+        
       </div>
     </div>
   );

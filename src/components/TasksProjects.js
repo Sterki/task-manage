@@ -7,15 +7,26 @@ import { useSelector, useDispatch } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router-dom";
 import { auth, db } from "./../firebase";
-import { getTaskProjectAction } from "./../actions/projectsActions";
+import { getTaskProjectAction, deleteProjectFirebaseAction } from "./../actions/projectsActions";
 import Tasks from "./Tasks";
 import TaskToEdit from "./TaskToEdit";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+import LabelImportantIcon from "@material-ui/icons/LabelImportant";
+import DeleteIcon from '@material-ui/icons/Delete';
+import ClearIcon from '@material-ui/icons/Clear';
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(0),
     width: "100%",
     marginTop: "1rem",
+  },
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
   },
 }));
 function TasksProjects() {
@@ -27,10 +38,14 @@ function TasksProjects() {
   const tasktoedit = useSelector((state) => state.project.tasktoedit);
 
   const [name, setName] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (name === "") {
+      setError(true);
+      return;
+    }
     // here goes the code tu add a new task inside our project with firebase
     if (projectName !== null) {
       db.collection("projectos")
@@ -44,6 +59,8 @@ function TasksProjects() {
         .catch((error) => {
           console.log(error.message);
         });
+      setName("");
+      setError(false);
     }
   };
   useEffect(() => {
@@ -74,78 +91,119 @@ function TasksProjects() {
     }
   }, [projectName]);
 
+  const handleClickEliminar = () => {
+
+    if (projectName !== null) {
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          db.collection("projectos")
+            .doc(projectName.id).delete()
+            .then(function () {
+              console.log("projecto eliminado");
+            }).catch(function (error) {
+              alert("error removing document", error.message)
+            })
+          dispatch(deleteProjectFirebaseAction());
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your Project has been Deleted',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }
+      })
+    }
+  }
   return (
     <>
-      {tasktoedit !== null && projectName !== null ? (
+      {tasktoedit !== null ? (
         <TaskToEdit
+          setError={setError}
           taskid={tasktoedit.id}
           task={tasktoedit.task}
           projectId={projectName.id}
         />
       ) : (
-        <div className="tasksprojects">
-          {projectName ? <h2>Project: {projectName.project.name} </h2> : null}
-          {!projectName ? (
-            <Alert style={{ margin: "2rem" }} severity="warning">
-              You should first select a project to Add a new Task
-            </Alert>
-          ) : (
-            <div className="tasksprojects__header">
-              <form className={classes.root} noValidate autoComplete="off">
-                {/* a input to set the name of the task */}
+          <div className="tasksprojects">
+            {projectName ? (<div className="tasksprojects__subheader"><h2>Project: {projectName.project.name}  </h2><button className="button_deleteproject" onClick={handleClickEliminar}><p>Delete project</p><ClearIcon style={{ color: 'red' }} /></button></div>) : null}
+            {!projectName ? (
+              <Alert style={{ margin: "2rem" }} severity="warning">
+                You should first select a project to Add a new Task
+              </Alert>
+            ) : (
+                <div className="tasksprojects__header">
+                  <form className={classes.root} noValidate autoComplete="off">
+                    {/* a input to set the name of the task */}
+                    {error ? (
+                      <div className={classes.root}>
+                        <Alert severity="error">The field name is required!</Alert>
+                      </div>
+                    ) : null}
 
-                <TextField
-                  className="tasksprojects__input"
-                  id="filled-basic"
-                  label="Task name"
-                  variant="filled"
-                  name="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                    <TextField
+                      className="tasksprojects__input"
+                      id="filled-basic"
+                      label="Task name"
+                      variant="filled"
+                      name="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
 
-                <Button
-                  type="submit"
-                  onClick={handleSubmit}
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  className={classes.button}
-                  startIcon={<SaveIcon />}
-                >
-                  Save Task
-                </Button>
-              </form>
-            </div>
-          )}
-        </div>
-      )}
+                    <button
+                      className="button__tasks"
+                      type="submit"
+                      onClick={handleSubmit}
+                    >
+                      <SaveIcon />
+                      <p>Save Task</p>
+                    </button>
+                  </form>
+                </div>
+              )}
+          </div>
+        )}
 
       <div className="tasksprojects__hrcontainer">
-        <hr />
+        <hr></hr>
       </div>
+
       {projectName !== null ? (
         <div className="taskproject__tasks">
-          <h2>Tasks here</h2>
+          <h2>List of tasks</h2>
 
           <div className="tasksprojects__content">
-            {listtasks?.map(({ id, tasks }) => (
-              <Tasks
-                key={id}
-                taskId={id}
-                tasks={tasks}
-                projectoTask={projectName}
-              />
-            ))}
+            <TransitionGroup>
+              {listtasks.map(({ id, tasks }) => (
+                <CSSTransition
+                  key={id}
+                  timeout={200}
+                  classNames="tasksprojects__styles"
+                >
+                  <Tasks taskId={id} tasks={tasks} projectoTask={projectName} />
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
           </div>
         </div>
       ) : (
-        <div className="taskprojects__alertmessage">
-          <Alert style={{ margin: "2rem" }} severity="warning">
-            You should first select a project to Add a new Task
+          <div className="taskprojects__alertmessage">
+            <Alert style={{ margin: "2rem" }} severity="warning">
+              You should first select a project to Add a new Task
           </Alert>
-        </div>
-      )}
+          </div>
+        )}
     </>
   );
 }

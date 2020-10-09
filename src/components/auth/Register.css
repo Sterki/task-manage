@@ -23,3 +23,40 @@
   color: rgb(253, 253, 253);
   text-transform: uppercase;
 }
+.button__login {
+  background-color: rgb(37, 37, 37);
+  border: 1px solid transparent;
+  padding: 0.6rem;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease;
+}
+.button__login > p {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+.button__login:hover {
+  background-color: rgb(44, 44, 44);
+  border-color: white;
+}
+.login__createaccount {
+  display: flex;
+  align-items: center;
+}
+.login__createaccount > p {
+  color: rgb(48, 47, 47);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: underline;
+}
+.login__linkacc {
+  display: flex;
+  align-items: center;
+}

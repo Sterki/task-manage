@@ -7,7 +7,8 @@ import SaveIcon from "@material-ui/icons/Save";
 import { auth } from "./../../firebase";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
+import LabelImportantIcon from "@material-ui/icons/LabelImportant";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -112,21 +113,19 @@ function Register() {
             value={confirm}
             onChange={handleChange}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            className={classes.button}
-            startIcon={<SaveIcon />}
+          <button
+            className="button__login"
             type="submit"
             onClick={handleSubmit}
           >
-            Create an Account
-          </Button>
-          <p>
-            Back to login?
+            <LabelImportantIcon />
+            <p>Create an Account</p>
+          </button>
+          <div className="login__createaccount">
+            <p>Back to login?</p>
             <Link
               to="/"
+              className="login__linkacc"
               style={{
                 textDecoration: "none",
                 cursor: "pointer",
@@ -136,9 +135,10 @@ function Register() {
                 marginLeft: "0.5rem",
               }}
             >
-              Click Here!
+              <p> Click Here!</p>
+              <ArrowBackIcon />
             </Link>
-          </p>
+          </div>
         </form>
       </div>
     </div>

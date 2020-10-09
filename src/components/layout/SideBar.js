@@ -197,18 +197,20 @@ function SideBar() {
     <div className="div__contenedornav">
       {["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <ViewHeadlineIcon
-            className="button__navi"
-            onClick={toggleDrawer(anchor, true)}
-            style={{
-              width: "2rem",
-              height: "2rem",
-              position: "absolute",
-              color: "white",
-            }}
-          >
-            {anchor}
-          </ViewHeadlineIcon>
+          <div className="sidebar__menu">
+            <ViewHeadlineIcon
+              className="button__navi"
+              onClick={toggleDrawer(anchor, true)}
+              style={{
+                width: "2rem",
+                height: "2rem",
+                color: "white",
+              }}
+            >
+              {anchor}
+            </ViewHeadlineIcon>
+          </div>
+
           <Drawer
             anchor={anchor}
             open={state[anchor]}

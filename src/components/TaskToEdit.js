@@ -4,6 +4,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
 import "./tasksprojects.css";
 import { db } from "./../firebase";
+import { useDispatch, useSelector } from "react-redux";
+import MuiAlert from "@material-ui/lab/Alert";
+import {
+  setTaskToEditAction,
+  setStatusEditAction,
+} from "./../actions/projectsActions";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -12,11 +19,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "1rem",
   },
 }));
-function TaskToEdit({ taskid, task, projectId }) {
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+function TaskToEdit({ taskid, task, projectId, setError }) {
   const classes = useStyles();
   const [name, setName] = useState("");
+  const dispatch = useDispatch();
   const [newname, setNewName] = useState("");
-  console.log(projectId, " ", taskid, " ", name);
+  const projectName = useSelector((state) => state.project.projectTaskAdd);
 
   useEffect(() => {
     setName(task.name);
@@ -34,37 +46,49 @@ function TaskToEdit({ taskid, task, projectId }) {
       .catch((error) => {
         console.log(error.message);
       });
+    setName("");
+    setError(false);
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your task has been Edited",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+
+    dispatch(setTaskToEditAction());
   };
+
   return (
-    <div className="tasksprojects">
-      <div className="tasksprojects__header">
-        <form className={classes.root} noValidate autoComplete="off">
-          {/* a input to set the name of the task */}
+    <>
+      <div className="tasksprojects">
+        <h2>Project: {projectName?.project.name} </h2>
+        <div className="tasksprojects__header">
+          <form className={classes.root} noValidate autoComplete="off">
+            {/* a input to set the name of the task */}
 
-          <TextField
-            className="tasksprojects__input"
-            id="filled-basic"
-            label="Edit the name here ..."
-            variant="filled"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+            <TextField
+              className="tasksprojects__input"
+              id="filled-basic"
+              label="Edit the name here ..."
+              variant="filled"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-          <Button
-            type="submit"
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-            size="large"
-            className={classes.button}
-            startIcon={<SaveIcon />}
-          >
-            Edit Task
-          </Button>
-        </form>
+            <button
+              className="button__tasks"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              <SaveIcon />
+              <p>Edit Task</p>
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

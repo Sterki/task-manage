@@ -63,7 +63,11 @@
 }
 .button__navi {
   cursor: pointer;
+  top: 2rem;
+  left: 2rem;
+  transition: 0.2s ease;
 }
+
 .div__contenedornav {
   position: relative;
 }
@@ -73,4 +77,19 @@
 }
 .sidebar__info > div {
   display: flex;
+}
+.sidebar__menu {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  transition: 0.2s ease;
+}
+.sidebar__menu:hover {
+  background-color: rgb(49, 48, 48);
+  border-radius: 50px;
 }

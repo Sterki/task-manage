@@ -4,8 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
+import LabelImportantIcon from "@material-ui/icons/LabelImportant";
 import { auth } from "./../../firebase";
 import { Link, useHistory } from "react-router-dom";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,22 +80,19 @@ function Login() {
             value={password}
             onChange={handleChange}
           />
-
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            className={classes.button}
-            startIcon={<SaveIcon />}
+          <button
+            className="button__login"
             type="submit"
             onClick={handleSubmit}
           >
-            Sign In
-          </Button>
-          <p>
-            don't have an account?
+            <LabelImportantIcon />
+            <p>Sign In</p>
+          </button>
+          <div className="login__createaccount">
+            <p>don't have an account?</p>
             <Link
               to="/register"
+              className="login__linkacc"
               style={{
                 textDecoration: "none",
                 cursor: "pointer",
@@ -103,9 +102,10 @@ function Login() {
                 marginLeft: "0.5rem",
               }}
             >
-              Create Here!
+              <p> Create Here!</p>
+              <AddCircleOutlineIcon />
             </Link>
-          </p>
+          </div>
         </form>
       </div>
     </div>

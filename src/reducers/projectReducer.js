@@ -6,6 +6,11 @@ import {
   DELETE_PROJECT_USER,
   GET_PROJECT_TASK,
   GET_TASK_TO_EDIT,
+  DELETE_TASK_TO_EDIT,
+  STATUS_DELETE,
+  SET_TASK_TO_EDIT,
+  SET_STATUS_TO_EDIT,
+  DELETE_PROJECT_FIREBASE
 } from "./../types";
 
 const inisialState = {
@@ -14,6 +19,8 @@ const inisialState = {
   projectusertask: [],
   listtasks: [],
   tasktoedit: null,
+  statusdelete: false,
+  statusedit: false,
 };
 
 export default (state = inisialState, action) => {
@@ -39,6 +46,7 @@ export default (state = inisialState, action) => {
         projectusertask: action.payload,
       };
     case DELETE_PROJECT_USER:
+      case DELETE_PROJECT_FIREBASE:
       return {
         ...state,
         projectusertask: [],
@@ -53,6 +61,26 @@ export default (state = inisialState, action) => {
       return {
         ...state,
         tasktoedit: action.payload,
+      };
+    case DELETE_TASK_TO_EDIT:
+      return {
+        ...state,
+        tasktoedit: null,
+      };
+    case STATUS_DELETE:
+      return {
+        ...state,
+        statusdelete: action.payload,
+      };
+    case SET_TASK_TO_EDIT:
+      return {
+        ...state,
+        tasktoedit: null,
+      };
+    case SET_STATUS_TO_EDIT:
+      return {
+        ...state,
+        statusedit: action.payload,
       };
     default:
       return state;

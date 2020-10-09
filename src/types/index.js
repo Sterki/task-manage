@@ -16,3 +16,10 @@ export const GET_PROJECT_TASK = "GET_PROJECT_TASK";
 // action para editar
 
 export const GET_TASK_TO_EDIT = "GET_TASK_TO_EDIT";
+export const DELETE_TASK_TO_EDIT = "DELETE_TASK_TO_EDIT";
+
+export const STATUS_DELETE = "STATUS_DELETE";
+export const SET_TASK_TO_EDIT = "SET_TASK_TO_EDIT";
+export const SET_STATUS_TO_EDIT = "SET_STATUS_TO_EDIT";
+
+export const DELETE_PROJECT_FIREBASE = 'DELETE_PROJECT_FIREBASE';

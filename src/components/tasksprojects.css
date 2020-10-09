@@ -25,7 +25,9 @@
   margin-top: 2rem;
 }
 .tasksprojects__hrcontainer > hr {
-  color: rgb(255, 254, 254);
+  background-color: rgb(223, 219, 219);
+  height: 4px;
+  border: none;
 }
 
 .tasksprojects__header {
@@ -60,4 +62,76 @@
 .taskprojects__alertmessage {
   display: flex;
   justify-content: center;
+}
+.tasksprojects__styles-enter {
+  opacity: 0;
+}
+.tasksprojects__styles-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.tasksprojects__styles-exit {
+  opacity: 1;
+}
+.tasksprojects__styles-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+.taskproject__tasks > h2 {
+  color: rgb(117, 117, 117);
+  padding: 2rem;
+}
+.button__tasks {
+  background-color: rgb(37, 37, 37);
+  border: 1px solid lightgray;
+  padding: 0.8rem;
+  width: 100%;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease;
+  margin-top: 1rem;
+}
+.button__tasks > p {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+.button__tasks:hover {
+  background-color: rgb(44, 44, 44);
+}
+.tasksprojects__subheader {
+  display: flex;
+  width: 100%;
+  text-align: center;
+}
+.tasksprojects__subheader > h2 {
+  flex: 1;
+}
+.tasksprojects__subheader > p {
+  color: rgb(150, 149, 149);
+}
+.tasksprojects__deleteproject {
+  color: rgb(235, 4, 4);
+}
+.button_deleteproject {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+  background-color: rgb(231, 230, 230);
+  border-radius: 5px;
+  margin: 1rem;
+  border: 1px solid transparent;
+}
+.button_deleteproject > p {
+  color: rgb(124, 123, 123);
+}
+.button_deleteproject:hover {
+  border-color: rgb(214, 3, 3);
 }
