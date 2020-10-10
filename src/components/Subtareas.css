@@ -1,0 +1,9 @@
+.subtareas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.subtareas__buttons {
+  display: flex;
+  align-items: center;
+}

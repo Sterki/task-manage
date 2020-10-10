@@ -136,6 +136,7 @@
   border-radius: 5px;
   margin-top: 1rem;
   border: 1px solid transparent;
+  outline: none;
 }
 .button_deleteproject > p {
   color: rgb(124, 123, 123);

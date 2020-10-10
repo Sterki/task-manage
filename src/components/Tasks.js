@@ -4,7 +4,15 @@ import "./Tasks.css";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import Typography from "@material-ui/core/Typography";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import { makeStyles } from "@material-ui/core/styles";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import RemoveCircleOutlineRoundedIcon from "@material-ui/icons/RemoveCircleOutlineRounded";
 import {
   getTaskToEditAction,
   setStatusDeleteAction,
@@ -17,17 +25,31 @@ import { db } from "./../firebase";
 
 // here the material ui code
 import Slide from "@material-ui/core/Slide";
+import SubTareas from "./SubTareas";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+    width: "100%",
+  },
+}));
+
 function Tasks({ projectoTask, taskId, tasks }) {
   const dispatch = useDispatch();
   const [status, setStatus] = useState();
-
+  const classes = useStyles();
   // here the state to change open to close
   const [open, setOpen] = useState(false);
+  const [subtask, setSubtask] = useState("");
+  const [mas, setMas] = useState(true);
 
   const handleClickComplete = () => {
     if (projectoTask !== null) {
@@ -106,40 +128,102 @@ function Tasks({ projectoTask, taskId, tasks }) {
       });
     }
   };
-  return (
-    <div className="tasks">
-      <div className="tasks__titlecontainer">
-        <h2 className="tasks__title">{tasks.name}</h2>
-      </div>
-      <div className="tasks__actions">
-        {status ? (
-          <button
-            className="tasks__buttonsIncomplete"
-            onClick={handleClickImcomplete}
-          >
-            <p>Complete</p>
-            <CheckCircleIcon style={{ marginLeft: "0.7rem", color: "green" }} />
-          </button>
-        ) : (
-          <button
-            className="tasks__buttonsIncomplete"
-            onClick={handleClickComplete}
-          >
-            <p>Incomplete</p>
-            <HighlightOffIcon style={{ marginLeft: "0.7rem", color: "red" }} />
-          </button>
-        )}
 
-        <button className="tasks__buttonedit">
-          <EditIcon
-            onClick={() => handleClickEdit(taskId, tasks)}
-            style={{ color: "green", cursor: "pointer" }}
-          />
-        </button>
-        <button onClick={handleClick} className="tasks__buttondelete">
-          <DeleteForeverIcon style={{ color: "red", cursor: "pointer" }} />
-        </button>
-      </div>
+  const handleClickShowDiv = () => {
+    let divvisibility = document.getElementById("subtareas__inputshow");
+
+    if (divvisibility.style.display === "block") {
+      divvisibility.style.display = "none";
+      setMas(true);
+    } else {
+      divvisibility.style.display = "block";
+      setMas(false);
+    }
+  };
+  return (
+    <div className={classes.root}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>
+            <div className="tasks">
+              <div className="tasks__titlecontainer">
+                <h2 className="tasks__title">{tasks.name}</h2>
+              </div>
+              <div className="tasks__actions">
+                {status ? (
+                  <button
+                    className="tasks__buttonsIncomplete"
+                    onClick={handleClickImcomplete}
+                  >
+                    <p>Complete</p>
+                    <CheckCircleIcon
+                      style={{ marginLeft: "0.7rem", color: "green" }}
+                    />
+                  </button>
+                ) : (
+                  <button
+                    className="tasks__buttonsIncomplete"
+                    onClick={handleClickComplete}
+                  >
+                    <p>Incomplete</p>
+                    <HighlightOffIcon
+                      style={{ marginLeft: "0.7rem", color: "red" }}
+                    />
+                  </button>
+                )}
+
+                <button className="tasks__buttonedit">
+                  <EditIcon
+                    onClick={() => handleClickEdit(taskId, tasks)}
+                    style={{ color: "green", cursor: "pointer" }}
+                  />
+                </button>
+                <button onClick={handleClick} className="tasks__buttondelete">
+                  <DeleteForeverIcon
+                    style={{ color: "red", cursor: "pointer" }}
+                  />
+                </button>
+              </div>
+            </div>
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails style={{ msOverflowY: "scroll" }}>
+          <Typography style={{ width: "100%" }}>
+            <div className="tasks__subtasks">
+              {/* subtasks here */}
+              {mas ? (
+                <div className="tasks__infoiconsmas">
+                  <AddCircleOutlineIcon onClick={handleClickShowDiv} />{" "}
+                  <p>Add sub-tasks</p>
+                </div>
+              ) : (
+                <div className="tasks__infoiconsmas">
+                  <RemoveCircleOutlineRoundedIcon
+                    onClick={handleClickShowDiv}
+                  />{" "}
+                  <p>Add sub-tasks</p>
+                </div>
+              )}
+
+              <div className="subtareas__input" id="subtareas__inputshow">
+                <input
+                  type="text"
+                  placeholder={"Type ur #sub-task Here!"}
+                  onChange={(e) => setSubtask(e.target.value)}
+                />
+                <button disabled={!subtask}>Save</button>
+              </div>
+              <SubTareas />
+              <SubTareas />
+              <SubTareas />
+            </div>
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }

@@ -2,7 +2,7 @@
   background-color: rgb(255, 255, 255);
   width: 100%;
   box-shadow: 1px 8px 7px 0px lightgray;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   padding: 1rem;
   border-radius: 4px;
   display: flex;
@@ -15,7 +15,6 @@
   flex: 1;
 }
 .tasks__title {
-  font-size: 1.2rem;
   color: rgb(122, 121, 121);
 }
 .tasks__actions {
@@ -55,4 +54,54 @@
 }
 .tasks__buttonsIncomplete > p {
   color: rgb(92, 91, 91);
+}
+.tasks__subtasks {
+  padding: 0rem 2rem;
+}
+.subtareas__input {
+  margin-bottom: 1rem;
+  display: none;
+}
+.subtareas__input > input {
+  width: 15rem;
+  padding: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+}
+.subtareas__input > button:disabled {
+  padding: 0.5rem;
+  border: none;
+  width: 8rem;
+  background-color: rgb(97, 96, 96);
+  color: white;
+  border-radius: 3px;
+  margin-left: 2rem;
+}
+.subtareas__input > button {
+  padding: 0.5rem;
+  border: none;
+  width: 8rem;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 2rem;
+  transition: 0.2s ease;
+}
+.tasks__infoiconsmas > .MuiSvgIcon-root {
+  color: gray;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+.tasks__infoiconsmas > .MuiSvgIcon-root:hover {
+  color: green;
+}
+.tasks__infoiconsmas {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.tasks__infoiconsmas > p {
+  margin-left: 1rem;
+  color: gray;
 }
