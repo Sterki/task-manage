@@ -41,8 +41,10 @@
 .header__menuitems {
   display: flex;
 }
-.header__menuitems > p {
+.header__menuitems > .header__link {
   margin-left: 0.5rem;
+  color: rgb(63, 63, 63);
+
 }
 .div__mensajes {
   position: relative;

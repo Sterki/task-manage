@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import SideBar from "./components/layout/SideBar";
 import Header from "./components/layout/Header";
@@ -8,10 +8,12 @@ import { Provider } from "react-redux";
 import TasksProjects from "./components/TasksProjects";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
-import { auth } from "./firebase";
+import { auth, storage } from "./firebase";
 import { useDispatch } from "react-redux";
-import { getUserAuthAction } from "./actions/userActions";
-import Profile from './components/Profile';
+import { getUserAuthAction, setImageUrlAction } from "./actions/userActions";
+import Profile from "./components/Profile";
+import ProjectsPage from "./components/ProjectsPage";
+import { db } from "./firebase";
 
 function wrappApp() {
   return (
@@ -26,7 +28,18 @@ function App() {
 
   useEffect(() => {
     auth.onAuthStateChanged((authUsuer) => {
-      dispatch(getUserAuthAction(authUsuer));
+      if (authUsuer) {
+        dispatch(getUserAuthAction(authUsuer));
+        storage
+          .ref("users/" + authUsuer?.uid + "/profile.jpg")
+          .getDownloadURL()
+          .then((imageUrl) => {
+            dispatch(setImageUrlAction(imageUrl));
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      }
     });
   }, [dispatch]);
   return (
@@ -38,9 +51,14 @@ function App() {
               <Register />
             </Route>
             <Route path="/profile">
-            <SideBar />
-            <Header />
+              <SideBar />
+              <Header />
               <Profile />
+            </Route>
+            <Route path="/projects">
+              <SideBar />
+              <Header />
+              <ProjectsPage />
             </Route>
             <Route path="/tasks">
               <SideBar />

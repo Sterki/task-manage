@@ -10,7 +10,7 @@ import {
   STATUS_DELETE,
   SET_TASK_TO_EDIT,
   SET_STATUS_TO_EDIT,
-  DELETE_PROJECT_FIREBASE
+  DELETE_PROJECT_FIREBASE,
 } from "./../types";
 
 const inisialState = {
@@ -46,7 +46,7 @@ export default (state = inisialState, action) => {
         projectusertask: action.payload,
       };
     case DELETE_PROJECT_USER:
-      case DELETE_PROJECT_FIREBASE:
+    case DELETE_PROJECT_FIREBASE:
       return {
         ...state,
         projectusertask: [],

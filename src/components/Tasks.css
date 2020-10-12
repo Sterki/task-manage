@@ -3,9 +3,24 @@
   width: 100%;
   box-shadow: 1px 8px 7px 0px lightgray;
   margin-bottom: 0rem;
-  padding: 1rem;
+  padding: 0.5rem;
   border-radius: 4px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .tasks {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    box-shadow: 1px 8px 7px 0px lightgray;
+    margin-bottom: 0rem;
+    padding: 1rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 
 .tasks__actions {
@@ -13,6 +28,13 @@
 }
 .tasks__titlecontainer {
   flex: 1;
+  margin-bottom: 0.5rem;
+}
+@media (min-width: 768px) {
+  .tasks__titlecontainer {
+    flex: 1;
+    margin-bottom: 0rem;
+  }
 }
 .tasks__title {
   color: rgb(122, 121, 121);
@@ -63,13 +85,14 @@
   display: block;
 }
 .subtareas__input > input {
-  width: 10rem;
+  width: 15rem;
   padding: 0.5rem;
   border-bottom: 1px solid lightgray;
   border-left: 0px;
   border-top: 0px;
   border-right: 0px;
   border-radius: 5px;
+  outline: none;
 }
 .subtareas__input > button:disabled {
   padding: 0.3rem;
@@ -84,6 +107,7 @@
   padding: 0.3rem;
   border: none;
   width: 4rem;
+  display: none;
   background-color: black;
   color: white;
   cursor: pointer;

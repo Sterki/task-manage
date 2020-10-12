@@ -1,7 +1,8 @@
-import { GET_USER_LOGED, DELETE_USER_AUTH } from "./../types";
+import { GET_USER_LOGED, DELETE_USER_AUTH, SET_IMAGE_URL } from "./../types";
 
 const inisialState = {
   userAuth: null,
+  imageProfile: null,
 };
 
 export default (state = inisialState, action) => {
@@ -15,6 +16,12 @@ export default (state = inisialState, action) => {
       return {
         ...state,
         userAuth: null,
+        imageProfile: null,
+      };
+    case SET_IMAGE_URL:
+      return {
+        ...state,
+        imageProfile: action.payload,
       };
     default:
       return state;

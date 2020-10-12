@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import "./Profile.css";
 import { Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector, useDispatch } from "react-redux";
+import { auth } from "./../firebase";
+import { storage } from "./../firebase";
+import { setImageUrlAction } from "./../actions/userActions";
+import { Alert } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,8 +18,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Profile() {
+function Profile({ imagenProfile }) {
   const classes = useStyles();
+  const [userauthenticated, setUserAuth] = useState();
+  const [photo, setPhoto] = useState(null);
+  const dispatch = useDispatch();
+  const userAuth = useSelector((state) => state.users.userAuth);
+  const imageProfile = useSelector((state) => state.users.imageProfile);
+  const [imagenperfil, setImagenPerfil] = useState(null);
+  const [imageerror, setImageError] = useState(false);
+
+  useEffect(() => {
+    if (userAuth) {
+      setUserAuth({
+        name: userAuth.displayName,
+        email: userAuth.email,
+        photoRuta: userAuth.photoURL,
+      });
+    }
+  }, [userAuth]);
+
+  const handleChange = (e) => {
+    if (e.target.files[0]) {
+      setPhoto(e.target.files[0]);
+    }
+  };
+
+  const handleClickUpdate = (e) => {
+    e.preventDefault();
+    // the fancy code to update de url image
+    if (!photo) {
+      return setImageError(true);
+    }
+    storage
+      .ref("users/" + userAuth?.uid + "/profile.jpg")
+      .put(photo)
+      .then(function () {
+        console.log("upload succesfully!");
+        storage
+          .ref("users/" + userAuth?.uid + "/profile.jpg")
+          .getDownloadURL()
+          .then((imageUrl) => {
+            dispatch(setImageUrlAction(imageUrl));
+          });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    setPhoto(null);
+  };
+
   return (
     <>
       <div className="profile">
@@ -22,16 +75,22 @@ function Profile() {
           <div className={classes.root}>
             <Avatar
               style={{ width: "5rem", height: "5rem", marginBottom: "0.8rem" }}
-              alt="Remy Sharp"
-              src="/static/images/avatar/1.jpg"
+              alt=""
+              src={imageProfile}
             />
           </div>
           <h2>Personal Information</h2>
-          <p>
-            Basic information, such as name and photo, that you use in Task
-            Manage
-          </p>
         </div>
+        {imageerror ? (
+          <div className="profile__errorupload">
+            <Alert
+              style={{ width: "14rem", marginBottom: "1rem" }}
+              severity="error"
+            >
+              Ups, You must first upload an image
+            </Alert>
+          </div>
+        ) : null}
 
         <div className="profile__container">
           <div className="profile__profiletitle">
@@ -41,23 +100,24 @@ function Profile() {
             </p>
           </div>
           <div className="profile__info">
-            <label>Foto</label>
-            <input className="profile__file" type="file" name="picture" />
+            <label>Photo</label>
+            <input
+              className="profile__file"
+              type="file"
+              name="picture"
+              onChange={handleChange}
+            />
             <ChevronRightIcon />
           </div>
           <div className="profile__info">
             <label>Username</label>
-            <input className="profile__input" type="text" name="username" />
-            <ChevronRightIcon />
-          </div>
-          <div className="profile__info">
-            <label>Date of birth</label>
-            <input className="profile__input" type="text" name="birthday" />
-            <ChevronRightIcon />
-          </div>
-          <div className="profile__info">
-            <label>Gender</label>
-            <input className="profile__input" type="text" name="gender" />
+            <input
+              className="profile__input"
+              type="text"
+              name="username"
+              value={userauthenticated?.name}
+              disabled
+            />
             <ChevronRightIcon />
           </div>
           <div className="profile__info">
@@ -66,6 +126,7 @@ function Profile() {
               className="profile__input"
               type="text"
               name="password"
+              value="**********"
               disabled
             />
             <ChevronRightIcon />
@@ -73,28 +134,36 @@ function Profile() {
         </div>
       </div>
       <div className="profile">
-        <div className="profile__title">
-          <h2>Contact Informationn</h2>
-        </div>
-
-        <div className="profile__container2">
-          <div className="profile__containerinfo2">
-            <div className="profile__info">
-              <label>Email</label>
-              <input
-                className="profile__input"
-                type="text"
-                name="email"
-                disabled
-              />
-            </div>
-            <div className="profile__info">
-              <label>Fono</label>
-              <input className="profile__input" type="text" name="name" />
-            </div>
+        <form>
+          <div className="profile__title">
+            <h2>Contact Informationn</h2>
           </div>
-          <img src="https://www.gstatic.com/identity/boq/accountsettingsmobile/aboutme_scene_316x112_371ea487b68d0298cc54522403223de1.png" />
-        </div>
+
+          <div className="profile__container2">
+            <div className="profile__containerinfo2">
+              <div className="profile__info">
+                <label>Email</label>
+                <input
+                  className="profile__input"
+                  type="text"
+                  name="email"
+                  value={userauthenticated?.email}
+                  disabled
+                />
+              </div>
+              {/* <div className="profile__info">
+                <label>Fono</label>
+                <input className="profile__input" type="number" name="phono" />
+              </div> */}
+            </div>
+            <img src="https://www.gstatic.com/identity/boq/accountsettingsmobile/aboutme_scene_316x112_371ea487b68d0298cc54522403223de1.png" />
+          </div>
+          <div className="profile__containerbutton">
+            <button type="submit" onClick={handleClickUpdate} disabled={!photo}>
+              Update photo
+            </button>
+          </div>
+        </form>
       </div>
     </>
   );

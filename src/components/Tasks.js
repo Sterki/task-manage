@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
-    width: "100%",
+    width: "95%",
   },
 }));
 
@@ -186,7 +186,7 @@ function Tasks({ projectoTask, taskId, tasks }) {
           <Typography className={classes.heading}>
             <div className="tasks">
               <div className="tasks__titlecontainer">
-                <h2 className="tasks__title">{tasks.name}</h2>
+                <h3 className="tasks__title">{tasks.name}</h3>
               </div>
               <div className="tasks__actions">
                 {status ? (
@@ -248,7 +248,7 @@ function Tasks({ projectoTask, taskId, tasks }) {
                 <div className="subtareas__input" id="subtareas__inputshow">
                   <input
                     type="text"
-                    placeholder={"Type ur #sub-task Here!"}
+                    placeholder={"#Sub-task here! Enter to save!"}
                     value={subtask}
                     onChange={(e) => setSubtask(e.target.value)}
                   />

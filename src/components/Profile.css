@@ -18,10 +18,7 @@
 .profile__profiletitle {
   margin-bottom: 2rem;
 }
-.profile__container2 {
-  display: flex;
-  align-items: center;
-}
+
 .profile__container2 > img {
   object-fit: contain;
   width: 100%;
@@ -32,6 +29,17 @@
   display: flex;
   flex-direction: column;
   flex: 0.8;
+}
+.profile__container2 {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  .profile__container2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 }
 .profile__info {
   padding: 1rem 0rem;
@@ -67,7 +75,10 @@
 
 .profile__input {
   flex: 0.8;
-  border: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
   outline: none;
   padding: 0.5rem;
   width: 95%;
@@ -77,4 +88,36 @@
 .profile__info > label {
   flex: 0.5;
   margin-bottom: 0.7rem;
+}
+.profile__containerbutton > button {
+  width: 20rem;
+  padding: 0.4rem;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 1.1rem;
+}
+.profile__containerbutton > button:disabled {
+  width: 20rem;
+  padding: 0.4rem;
+  border: none;
+  background-color: rgb(90, 88, 88);
+  color: white;
+  border-radius: 5px;
+  transition: 0.2s ease;
+}
+
+.profile__containerbutton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.profile__errorupload {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

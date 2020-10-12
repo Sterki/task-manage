@@ -1,0 +1,23 @@
+.projecspage {
+  width: 1200px;
+  width: 95%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: rgb(241, 241, 241);
+}
+.projectspage__info {
+  width: 18rem;
+  cursor: grab;
+  margin: 0.5rem;
+}
+.projectpage__title {
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+  background-color: rgb(228, 226, 226);
+}
+.listoftask__h3 {
+  color: rgb(236, 234, 234);
+}

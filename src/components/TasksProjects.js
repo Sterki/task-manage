@@ -204,7 +204,7 @@ function TasksProjects() {
 
       {projectName !== null ? (
         <div className="taskproject__tasks">
-          <h2>List of tasks</h2>
+          <h2>#tasks</h2>
 
           <div className="tasksprojects__content">
             <TransitionGroup>
