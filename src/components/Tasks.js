@@ -231,7 +231,7 @@ function Tasks({ projectoTask, taskId, tasks }) {
             <form>
               <div className="tasks__subtasks">
                 {/* subtasks here */}
-                {mas ? (
+                {/* {mas ? (
                   <div className="tasks__infoiconsmas">
                     <AddCircleOutlineIcon onClick={handleClickShowDiv} />{" "}
                     <p>Add sub-tasks</p>
@@ -243,7 +243,7 @@ function Tasks({ projectoTask, taskId, tasks }) {
                     />{" "}
                     <p>Add sub-tasks</p>
                   </div>
-                )}
+                )} */}
 
                 <div className="subtareas__input" id="subtareas__inputshow">
                   <input
