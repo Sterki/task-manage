@@ -3,24 +3,42 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import EditIcon from "@material-ui/icons/Edit";
 import "./Subtareas.css";
+import { db } from "./../firebase";
 
-function SubTareas() {
+function SubTareas({ subtarea, idsubtarea, projectoTarea, tareaId }) {
+  const handleClickDelete = (e) => {
+    e.preventDefault();
+
+    db.collection("projectos")
+      .doc(projectoTarea)
+      .collection("tasks")
+      .doc(tareaId)
+      .collection("subtasks")
+      .doc(idsubtarea)
+      .delete()
+      .then(function () {
+        console.log("subtasks Deleted");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   return (
     <>
-      
       <div className="subtareas">
         <div>
-          <h4>Sub task 1</h4>
+          <h4>{subtarea.subtaskname}</h4>
         </div>
         <div className="subtareas__buttons">
-          <button className="tasks__buttonsIncomplete">
-            {/* <p>Complete</p> */}
+          {/* <button className="tasks__buttonsIncomplete">
+            
             <CheckCircleIcon style={{ color: "green" }} />
-          </button>
+          </button> */}
           {/* <button className="tasks__buttonedit">
           <EditIcon style={{ color: "green", cursor: "pointer" }} />
         </button> */}
-          <button className="tasks__buttondelete">
+          <button className="tasks__buttondelete" onClick={handleClickDelete}>
             <DeleteForeverIcon style={{ color: "red", cursor: "pointer" }} />
           </button>
         </div>

@@ -20,6 +20,7 @@ import {
 } from "./../actions/projectsActions";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import firebase from "firebase";
 
 import { db } from "./../firebase";
 
@@ -50,6 +51,7 @@ function Tasks({ projectoTask, taskId, tasks }) {
   const [open, setOpen] = useState(false);
   const [subtask, setSubtask] = useState("");
   const [mas, setMas] = useState(true);
+  const [subtasks, setSubtareas] = useState([]);
 
   const handleClickComplete = () => {
     if (projectoTask !== null) {
@@ -68,6 +70,23 @@ function Tasks({ projectoTask, taskId, tasks }) {
   useEffect(() => {
     setStatus(tasks.status);
   }, [status, tasks, projectoTask]);
+
+  useEffect(() => {
+    db.collection("projectos")
+      .doc(projectoTask.id)
+      .collection("tasks")
+      .doc(taskId)
+      .collection("subtasks")
+      .orderBy("created", "desc")
+      .onSnapshot((snapshot) => {
+        setSubtareas(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            subtarea: doc.data(),
+          }))
+        );
+      });
+  }, []);
   const handleClickImcomplete = () => {
     if (projectoTask !== null) {
       db.collection("projectos")
@@ -140,6 +159,22 @@ function Tasks({ projectoTask, taskId, tasks }) {
       setMas(false);
     }
   };
+
+  const handleClickSave = (e) => {
+    e.preventDefault();
+    if (subtask) {
+      db.collection("projectos")
+        .doc(projectoTask.id)
+        .collection("tasks")
+        .doc(taskId)
+        .collection("subtasks")
+        .add({
+          created: firebase.firestore.FieldValue.serverTimestamp(),
+          subtaskname: subtask,
+        });
+      setSubtask("");
+    }
+  };
   return (
     <div className={classes.root}>
       <Accordion>
@@ -193,34 +228,49 @@ function Tasks({ projectoTask, taskId, tasks }) {
         </AccordionSummary>
         <AccordionDetails style={{ msOverflowY: "scroll" }}>
           <Typography style={{ width: "100%" }}>
-            <div className="tasks__subtasks">
-              {/* subtasks here */}
-              {mas ? (
-                <div className="tasks__infoiconsmas">
-                  <AddCircleOutlineIcon onClick={handleClickShowDiv} />{" "}
-                  <p>Add sub-tasks</p>
-                </div>
-              ) : (
-                <div className="tasks__infoiconsmas">
-                  <RemoveCircleOutlineRoundedIcon
-                    onClick={handleClickShowDiv}
-                  />{" "}
-                  <p>Add sub-tasks</p>
-                </div>
-              )}
+            <form>
+              <div className="tasks__subtasks">
+                {/* subtasks here */}
+                {mas ? (
+                  <div className="tasks__infoiconsmas">
+                    <AddCircleOutlineIcon onClick={handleClickShowDiv} />{" "}
+                    <p>Add sub-tasks</p>
+                  </div>
+                ) : (
+                  <div className="tasks__infoiconsmas">
+                    <RemoveCircleOutlineRoundedIcon
+                      onClick={handleClickShowDiv}
+                    />{" "}
+                    <p>Add sub-tasks</p>
+                  </div>
+                )}
 
-              <div className="subtareas__input" id="subtareas__inputshow">
-                <input
-                  type="text"
-                  placeholder={"Type ur #sub-task Here!"}
-                  onChange={(e) => setSubtask(e.target.value)}
-                />
-                <button disabled={!subtask}>Save</button>
+                <div className="subtareas__input" id="subtareas__inputshow">
+                  <input
+                    type="text"
+                    placeholder={"Type ur #sub-task Here!"}
+                    value={subtask}
+                    onChange={(e) => setSubtask(e.target.value)}
+                  />
+                  <button
+                    type="submit"
+                    disabled={!subtask}
+                    onClick={handleClickSave}
+                  >
+                    Save
+                  </button>
+                </div>
+                {subtasks?.map(({ id, subtarea }) => (
+                  <SubTareas
+                    key={id}
+                    idsubtarea={id}
+                    subtarea={subtarea}
+                    projectoTarea={projectoTask.id}
+                    tareaId={taskId}
+                  />
+                ))}
               </div>
-              <SubTareas />
-              <SubTareas />
-              <SubTareas />
-            </div>
+            </form>
           </Typography>
         </AccordionDetails>
       </Accordion>
