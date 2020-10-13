@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  background-color: rgb(241, 241, 241);
+  background-color: rgb(232, 235, 240);
 }
 .projectspage__info {
   width: 18rem;
