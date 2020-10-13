@@ -94,26 +94,11 @@
   border-radius: 5px;
   outline: none;
 }
-.subtareas__input > button:disabled {
-  padding: 0.3rem;
+
+.subtareas__input > .MuiSvgIcon-root {
   border: none;
-  width: 4rem;
-  background-color: rgb(97, 96, 96);
-  color: white;
-  border-radius: 3px;
-  margin-left: 2rem;
-}
-.subtareas__input > button {
-  padding: 0.3rem;
-  border: none;
-  width: 4rem;
-  display: none;
-  background-color: black;
-  color: white;
+  color: rgb(39, 39, 146);
   cursor: pointer;
-  border-radius: 5px;
-  margin-left: 2rem;
-  transition: 0.2s ease;
 }
 .tasks__infoiconsmas > .MuiSvgIcon-root {
   color: gray;

@@ -13,6 +13,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { makeStyles } from "@material-ui/core/styles";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveCircleOutlineRoundedIcon from "@material-ui/icons/RemoveCircleOutlineRounded";
+import AddIcon from "@material-ui/icons/Add";
 import {
   getTaskToEditAction,
   setStatusDeleteAction,
@@ -27,6 +28,7 @@ import { db } from "./../firebase";
 // here the material ui code
 import Slide from "@material-ui/core/Slide";
 import SubTareas from "./SubTareas";
+import { Fab, Tooltip } from "@material-ui/core";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -40,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
     width: "95%",
+  },
+  fab: {
+    margin: theme.spacing(2),
+    width: "2.1rem",
+    height: "2.1rem",
   },
 }));
 
@@ -212,15 +219,19 @@ function Tasks({ projectoTask, taskId, tasks }) {
                 )}
 
                 <button className="tasks__buttonedit">
-                  <EditIcon
-                    onClick={() => handleClickEdit(taskId, tasks)}
-                    style={{ color: "green", cursor: "pointer" }}
-                  />
+                  <Tooltip title="Edit Task">
+                    <EditIcon
+                      onClick={() => handleClickEdit(taskId, tasks)}
+                      style={{ color: "green", cursor: "pointer" }}
+                    />
+                  </Tooltip>
                 </button>
                 <button onClick={handleClick} className="tasks__buttondelete">
-                  <DeleteForeverIcon
-                    style={{ color: "red", cursor: "pointer" }}
-                  />
+                  <Tooltip title="Delete Task">
+                    <DeleteForeverIcon
+                      style={{ color: "red", cursor: "pointer" }}
+                    />
+                  </Tooltip>
                 </button>
               </div>
             </div>
@@ -252,13 +263,11 @@ function Tasks({ projectoTask, taskId, tasks }) {
                     value={subtask}
                     onChange={(e) => setSubtask(e.target.value)}
                   />
-                  <button
-                    type="submit"
-                    disabled={!subtask}
-                    onClick={handleClickSave}
-                  >
-                    Save
-                  </button>
+                  <Tooltip title="Add" aria-label="add">
+                    <Fab color="primary" className={classes.fab}>
+                      <AddIcon type="submit" onClick={handleClickSave} />
+                    </Fab>
+                  </Tooltip>
                 </div>
                 {subtasks?.map(({ id, subtarea }) => (
                   <SubTareas

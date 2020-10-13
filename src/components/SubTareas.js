@@ -4,6 +4,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import EditIcon from "@material-ui/icons/Edit";
 import "./Subtareas.css";
 import { db } from "./../firebase";
+import { Tooltip } from "@material-ui/core";
 
 function SubTareas({ subtarea, idsubtarea, projectoTarea, tareaId }) {
   const handleClickDelete = (e) => {
@@ -39,7 +40,9 @@ function SubTareas({ subtarea, idsubtarea, projectoTarea, tareaId }) {
           <EditIcon style={{ color: "green", cursor: "pointer" }} />
         </button> */}
           <button className="tasks__buttondelete" onClick={handleClickDelete}>
-            <DeleteForeverIcon style={{ color: "red", cursor: "pointer" }} />
+            <Tooltip title="Delete Sub-Task">
+              <DeleteForeverIcon style={{ color: "red", cursor: "pointer" }} />
+            </Tooltip>
           </button>
         </div>
       </div>
