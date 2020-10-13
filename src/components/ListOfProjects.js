@@ -48,41 +48,31 @@ function ListOfProjects({ projectId, project }) {
           }))
         );
       });
-  }, []);
+  }, [projectId]);
+
+  let divs = document.querySelectorAll(".listofproject__title");
+
+  for (var i = 0; i < divs.length; i++) {
+    let rgb = [];
+
+    for (let i = 0; i < 3; i++) rgb.push(Math.floor(Math.random() * 255));
+
+    divs[i].style.backgroundColor = "rgb(" + rgb.join(",") + ")";
+  }
 
   return (
     <div className="projectspage__info">
       <Draggable axis="both" scale={1} grid={[25, 25]} scale={1}>
-        <Card className={classes.root}>
-          <CardContent style={{ padding: "0rem" }}>
-            <Typography
-              className={classes.title}
-              gutterBottom
-              style={{
-                backgroundColor: "#000000",
-                padding: "0.4rem",
-              }}
-            >
-              <h3 className="listoftask__h3">{project.name}</h3>
-            </Typography>
-            <Typography
-              className={classes.pos}
-              color="textSecondary"
-              style={{ borderBottom: "1px solid lightgray", padding: "0.4rem" }}
-            >
-              <h4>Tasks</h4>
-            </Typography>
-            <Typography
-              variant="body2"
-              component="p"
-              style={{ padding: "0.5rem" }}
-            >
-              {listadotareas?.map(({ id, tasks }) => (
-                <ListOfTask key={id} tasks={tasks} />
-              ))}
-            </Typography>
-          </CardContent>
-        </Card>
+        <div className="listofproject__card">
+          <div className="listofproject__title">
+            <h3>{project.name}</h3>
+          </div>
+          <div className="listofproject__content">
+            {listadotareas?.map(({ id, tasks }) => (
+              <ListOfTask key={id} tasks={tasks} />
+            ))}
+          </div>
+        </div>
       </Draggable>
     </div>
   );

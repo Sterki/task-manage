@@ -31,7 +31,9 @@ function ProjectsPage() {
     <div className="projecspage">
       <div className="projectpage__title">
         <h1>Project List</h1>
-        <h3>#sort your tasks however you want#</h3>
+        <div className="projectpage__subtitle">
+          <h3>#sort your tasks however you want#</h3>
+        </div>
       </div>
       {projectsListado?.map(({ id, project }) => (
         <ListOfProjects key={id} projectId={id} project={project} />

@@ -4,20 +4,55 @@
   margin: 0 auto;
   text-align: center;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   background-color: rgb(241, 241, 241);
 }
 .projectspage__info {
   width: 18rem;
-  cursor: grab;
+
   margin: 0.5rem;
+}
+.projectpage__title > h3 {
+  margin-top: 2rem;
+}
+.projectpage__subtitle {
+  background-color: rgba(2, 2, 2, 0.247);
+  padding: 1rem;
+  border-radius: 4px;
+}
+.projectpage__subtitle > h3 {
+  color: white;
 }
 .projectpage__title {
   width: 100%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 2rem;
   background-color: rgb(228, 226, 226);
 }
+.projectpage__title > h1 {
+  margin-bottom: 1rem;
+}
 .listoftask__h3 {
   color: rgb(236, 234, 234);
+}
+.listofproject__card {
+  max-width: 25rem;
+  background-color: rgb(231, 231, 184);
+  border-radius: 6px;
+  border: 1px solid lightgray;
+}
+.listofproject__title > h3 {
+  color: rgb(230, 230, 230);
+  text-shadow: 2px 1px rgb(49, 49, 49);
+  padding: 0.5rem;
+}
+.listofproject__content {
+  padding: 1rem;
+}
+.listofproject__title {
+  border-radius: 4px 4px 0px 0px;
+  cursor: grab;
 }
